@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>sf</title>
+
+	<link rel="stylesheet" href="">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+<form id="test" method="post">
+	<input type="text" id="t">
+	<input type="submit" value="convert!">
+</form>
+<script type="text/javascript">
+	function string_to_slug(str) {
+		str = str.replace(/^\s+|\s+$/g, ''); // trim
+		str = str.toLowerCase();
+
+		// remove accents, swap ñ for n, etc
+		var from = "àáäâấầậẫẩèéëêìíïîòóöôùúüûñç·/_,:;"; //bổ sung thêm pattern tiếng việt chưa đủ
+		var to   = "aaaaaaaaaeeeeiiiioooouuuunc------";
+		for (var i=0, l=from.length ; i<l ; i++) {
+			str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+		}
+
+		str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
+		.replace(/\s+/g, '-') // collapse whitespace and replace by -
+		.replace(/-+/g, '-'); // collapse dashes
+
+		return str;
+	}
+	$(document).ready(function() {
+	    $('#test').submit(function(){
+	        var val = string_to_slug($('#t').val());
+	        alert(val);
+	        return false;
+	    });
+	});
+</script>
+</body>
+</html>
